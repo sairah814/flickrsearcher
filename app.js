@@ -1,12 +1,13 @@
 angular.module('FlickrApp', [])
     .controller('flickrCtrl', function ($scope, $http) {
+        $scope.isSearching = true;
         $scope.flickrSearch = function (keyword) {
-            $scope.searchterm = keyword;
             var url = "https://api.flickr.com/services/rest";
             var photoparams = {
-                method: 'flickr.photos.getRecent',
+                method: 'flickr.photos.search',
                 api_key: '23d67b1c61e2e05e99bd91280fd1f0d6',
                 extras: 'url_c, views',
+                text: keyword,
                 nojsoncallback: 1,
                 format: 'json',
                 per_page: 15
@@ -16,10 +17,14 @@ angular.module('FlickrApp', [])
                     url: url,
                     params: photoparams
                 })
-                .then(function (response) {
-                        console.log(response);
+                .then(function (results) {
+                        $scope.isSearching = false;
+                        console.log(results);
+                        console.log(results.data.photos.photo);
+                        $scope.results = results;
                     },
-                    function (response) {
+                    function (results) {
+                        $scope.isSearching = false;
                         console.log("There was an error");
                     }); //end of flickrSearch function
 
