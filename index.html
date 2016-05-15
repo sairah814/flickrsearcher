@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="FlickrApp">
 
 <head>
     <meta charset="UTF-8">
@@ -9,14 +9,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body ng-controller='flickrCtrl'>
     <div class="wrapper">
         <header>
             <h1>Flickr Searcher</h1></header>
 
         <section class="search">
-            <input type="text" id="searchterm" placeholder="Enter a tag to search" />
-            <button type="submit" id="submit">Submit</button>
+            <form ng-submit="flickrSearch(searchterm)">
+                <input type="text" name="searchterm" ng-model="searchterm" id="searchterm" placeholder="Enter a tag to search" required/>
+                <button type="submit" id="submit">Submit</button>
+            </form>
             <div id="waiting">Searching Flickr for photos tagged with -- ...</div>
             <div id="noresults">No results were found for --.</div>
             <div id="apierror">There was an error processing your request.</div>

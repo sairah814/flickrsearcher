@@ -1,3 +1,30 @@
+angular.module('FlickrApp', [])
+    .controller('flickrCtrl', function ($scope, $http) {
+        $scope.flickrSearch = function (keyword) {
+            $scope.searchterm = keyword;
+            var url = "https://api.flickr.com/services/rest";
+            var photoparams = {
+                method: 'flickr.photos.getRecent',
+                api_key: '23d67b1c61e2e05e99bd91280fd1f0d6',
+                extras: 'url_c, views',
+                nojsoncallback: 1,
+                format: 'json',
+                per_page: 15
+            };
+            $http({
+                    method: "GET",
+                    url: url,
+                    params: photoparams
+                })
+                .then(function (response) {
+                        console.log(response);
+                    },
+                    function (response) {
+                        console.log("There was an error");
+                    }); //end of flickrSearch function
+
+        };
+    });
 //Flickr API
 /*var flickrurl = 'https://api.flickr.com/services/rest/';
 var photoparams = {
